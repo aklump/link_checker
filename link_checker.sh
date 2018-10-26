@@ -13,6 +13,7 @@ CONFIG="link_checker.core.yml";
 
 function on_pre_config() {
     if [[ "$(get_command)" == "update" ]]; then
+    debug "$PWD;\$PWD"
         yarn || exit_with_failure "Missing yarn; cannot install node packages."
         exit_with_success "Node packages installed"
     fi
