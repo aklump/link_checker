@@ -4,7 +4,7 @@
 
 ## Summary
 
-Check your website for broken links.
+Crawl your website and detect broken links.  Generate various reports based on HTTP status codes and other criteria.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ Check your website for broken links.
 
 ## Requirements
 
-You must have [Cloudy](https://github.com/aklump/cloudy) and [yarn](https://yarnpkg.com/en/) installed on your system to install this package.
+You must have [Cloudy](https://github.com/aklump/cloudy) and [Yarn](https://yarnpkg.com/en/) installed on your system to install this package.
 
 ## Installation
 

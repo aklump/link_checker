@@ -7,4 +7,4 @@ push_master = auto
 push_develop = auto
 patch_prefix = .
 git_root = .
-info_file = __cloudy.core.yml
+info_file = link_checker.core.yml
