@@ -46,6 +46,10 @@ The installation script above will generate the following structure where `.` is
 
 * To see all commands use `./bin/link_checker help`
 
+## Special Thanks
+
+Under the hood we're using [stevenvachon/broken-link-checker](https://github.com/stevenvachon/broken-link-checker).  Thank you Steven!
+
 ## Contributing
 
 If you find this project useful... please consider [making a donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4E5KZHDQCEUV8&item_name=Gratitude%20for%20aklump%2Flink_checker).
