@@ -12,7 +12,9 @@ commands:
   help:
     help: 'Show this help screen.'
   init:
-    help: 'Initialize local configuration files.'
+    help: 'Initialize local config and dependencieds.'
+  update:
+    help: 'Update local config and dependencies.'
   reports:
     arguments: { filepath: { help: 'The path to the master report file.', required: true } }
     help: 'Generate sub-reports from an existing file.'
