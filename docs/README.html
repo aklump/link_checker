@@ -38,7 +38,8 @@
 <ul>
 <li>Install in your repository root using <code>cloudy pm-install aklump/link_checker</code></li>
 <li>Open <em>bin/config/link_checker.yml</em> and set your config.</li>
-<li>Crawl your site and create reports with <code>.bin/link_checker crawl</code></li>
+<li>Crawl your site with <code>.bin/link_checker crawl</code></li>
+<li>Create reports with <code>.bin/link_checker reports &lt;crawl_filepath&gt;</code></li>
 </ul>
 
 <h2>Requirements</h2>
@@ -92,6 +93,11 @@
 <li>To see all commands use <code>./bin/link_checker help</code></li>
 </ul>
 
+<blockquote>
+  <p><strong>Pro Tip:</strong>
+  Use <code>tail -f &lt;report filepath&gt;</code> in another console window to follow along with the report as it's being generated.  You will see the <code>report filepath</code> when you initiate the crawl.</p>
+</blockquote>
+
 <h2>Special Thanks</h2>
 
 <p>Under the hood we're using <a href="https://github.com/stevenvachon/broken-link-checker">stevenvachon/broken-link-checker</a>.  Thank you Steven!</p>
@@ -113,7 +119,7 @@
 </div>
   
   <div id="footer-legaleeze">
-    <p class="legaleeze center">Version: 1.0.12 &bull; Last Updated: Fri, 26 Oct 2018 07:50:18 -0700</p>
+    <p class="legaleeze center">Version: 1.0.13 &bull; Last Updated: Fri, 26 Oct 2018 10:28:50 -0700</p>
   </div>
 </footer>
 
