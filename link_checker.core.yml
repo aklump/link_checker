@@ -1,47 +1,30 @@
----
 additional_config:
   - ../../../bin/config/link_checker.yml
-author: "Aaron Klump <sourcecode@intheloftstudios.com>"
+author: 'Aaron Klump <sourcecode@intheloftstudios.com>'
 commands:
   check:
-    aliases:
-      - crawl
-    help: "Crawl your site and generate report(s) of your site's links."
-    options:
-      verbose:
-        aliases:
-          - v
-        help: "Display verbose info, e.g. cached and skipped items"
-        type: boolean
-      display:
-        aliases:
-          - d
-        help: "Display to screen; do not write files."
-        type: boolean
+    aliases: [crawl]
+    help: 'Crawl your site and generate report(s) of your site''s links.'
+    options: { verbose: { aliases: [v], help: 'Display verbose info, e.g. cached and skipped items', type: boolean }, display: { aliases: [d], help: 'Display to screen; do not write files.', type: boolean } }
   clear-cache:
-    aliases:
-      - clearcache
-      - cc
-    help: "Clear all cached data."
+    aliases: [clearcachebprd, cc]
+    help: 'Clear all cached data.'
   help:
-    help: "Show this help screen."
+    help: 'Show this help screen.'
   init:
-    help: "Initialize local configuration files."
+    help: 'Initialize local configuration files.'
   reports:
-    arguments:
-      filepath:
-        help: "The path to the master report file."
-        required: true
-    help: "Generate sub-reports from an existing file."
+    arguments: { filepath: { help: 'The path to the master report file.', required: true } }
+    help: 'Generate sub-reports from an existing file.'
 config_path_base: ../../..
 default_command: help
-description: ""
-name: "Link Checker"
-title: "Link Checker"
+description: ''
+name: 'Link Checker'
+title: 'Link Checker'
 translate:
   ids:
-    - "Completed successfully."
+    - 'Completed successfully.'
     - Failed.
   strings:
-    en: ~
-version: "1.0.7"
+    en: null
+version: 1.0.8
