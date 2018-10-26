@@ -42,7 +42,8 @@ case $command in
 
     "update")
         (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
-        exit_with_success_elapsed "Dependencies have been updated."
+        exit_with_success_elapsed "Dependencies were updated."
+        ;;
 
     "check")
         url_host=$(url_host $website_url)
@@ -96,7 +97,7 @@ case $command in
         fi
         has_failed && exit_with_failure
         exit_with_success_elapsed "Reports ready."
-    ;;
+        ;;
 
     "reports")
         filepath=$(get_command_arg 0)
@@ -118,7 +119,7 @@ case $command in
         fi
         has_failed && exit_with_failure
         exit_with_success_elapsed "Reports ready."
-    ;;
+        ;;
 
 esac
 
