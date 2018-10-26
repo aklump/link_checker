@@ -3,3 +3,4 @@ clone_from: https://github.com/aklump/link_checker
 entry_script: link_checker.sh
 entry_symlink: link_checker
 on_install: init
+on_update: update
