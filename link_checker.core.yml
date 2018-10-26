@@ -4,8 +4,15 @@ additional_config:
   - ../../../bin/config/link_checker.yml
 default_command: help
 commands:
-  crawl:
+  check:
     help: 'Crawl your site and generate report(s) of your site''s links.'
+    aliases:
+      - crawl
+    options:
+      display:
+        help: Display to screen; do not write files.
+        type: boolean
+        aliases: [d]
   init:
     help: 'Initialize local configuration files.'
   help:

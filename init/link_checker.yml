@@ -1,7 +1,25 @@
 # Enter the url of your website where the crawling will begin.
 website_url: http://www.intheloftstudios.com
 
-# Enter a directory to output reports; reports will be grouped by directory by domain name.
+# An array of strings, which if found in a link, the link will not be followed.
+# When you have certain links that you know to be valid, you may want to add
+# them here to reduce the amount of time it takes to crawl your site.
+#nofollow:
+#  - facebook.com/dialog/share
+#  - pinterest.com/pin/create
+#  - twitter.com/share
+
+# The tags and attributes that are considered links for checking, split into the
+# following levels:
+#
+# 0: clickable links
+# 1: clickable links, media, iframes, meta refreshes
+# 2: clickable links, media, iframes, meta refreshes, stylesheets, scripts, forms
+# 3: clickable links, media, iframes, meta refreshes, stylesheets, scripts, forms, metadata
+filter_level: 2
+
+# Enter a directory to output reports; reports will be grouped by directory by
+# domain name.
 report_dir: ./reports
 
 # A prefix for all report files.

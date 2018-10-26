@@ -33,39 +33,62 @@ eval $(get_config "report_basename" "links-report--")
 eval $(get_config_path "report_dir" ".")
 exit_with_failure_if_config_is_not_path "report_dir"
 eval $(get_config -a "subreports")
+eval $(get_config -a "nofollow")
+eval $(get_config -a "filter_level" 1)
 
 # Handle other commands.
 command=$(get_command)
 case $command in
 
-    "crawl")
+    "check")
     url_host=$(url_host $website_url)
 
     # Create a directory for output of reports for this host.
-    dirname=${report_dir%/}/${url_host}
+    dirname=${report_dir%/}/${url_host%/}
     [ -d $dirname ] || mkdir $dirname || exit_with_failure "Can't create reports directory $dirname"
     basename=${report_basename}$(url_host $website_url)--$(date8601 -c)
 
     list_clear
-    echo_heading "Crawling $url_host..."
-    list_add_item "$basename.txt"
+    echo_title "Crawling $url_host..."
+    echo_heading "Start time is $(echo_yellow $(time_local))"
+    echo
+    if ! has_option "display"; then
+        echo "Writing report to:"
+        list_add_item "${dirname}/${basename}.txt"
+    fi
     echo_green_list
 
     # Crawl the site using https://github.com/stevenvachon/broken-link-checker
-    (cd $ROOT/node_modules/broken-link-checker/bin && blc ${website_url} -ro > "${dirname%/}/$basename.txt")
+    declare -a options=('-rov' "--filter-level=${filter_level}");
+
+    # Add in our nofollow configuration, if there.
+    for pattern in "${nofollow[@]}"; do
+       options=("${options[@]}" "--exclude=${pattern}")
+    done
+    command="blc ${website_url} ${options[@]}"
+
+    if has_option "display"; then
+        (cd $ROOT/node_modules/broken-link-checker/bin && ${command})
+    else
+        (cd $ROOT/node_modules/broken-link-checker/bin && ${command} > "${dirname}/${basename}.txt")
+    fi
 
     # Generate subreports if asked.
     if [ ${#subreports[@]} -gt 0 ]; then
-        echo "Creating subreports in ${dirname%/}/"
+        echo "Creating subreports in ${dirname}/"
         list_clear
         for status in "${subreports[@]}"; do
-            list_add_item "${basename}--${status}.txt"
-            grep "$status" ${dirname%/}/$basename.txt > "${dirname%/}/${basename}--${status}.txt"
+            if has_option "display"; then
+                grep "$status" ${dirname}/${basename}.txt
+            else
+                list_add_item "${basename}--${status}.txt"
+                grep "$status" ${dirname}/${basename}.txt > "${dirname}/${basename}--${status}.txt"
+            fi
         done
         echo_green_list
     fi
     has_failed && exit_with_failure
-    exit_with_success "Reports ready."
+    exit_with_success_elapsed "Reports ready."
     ;;
 
 esac
