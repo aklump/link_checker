@@ -12,9 +12,7 @@ CONFIG="link_checker.core.yml";
 #LOGFILE="link_checker.core.log"
 
 function on_pre_config() {
-    if [[ "$(get_command)" == "update" ]]; then
-        (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
-    elif [[ "$(get_command)" == "init" ]]; then
+    if [[ "$(get_command)" == "init" ]]; then
         (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
         exit_with_init
     fi
@@ -41,6 +39,10 @@ eval $(get_config -a "filter_level" 1)
 # Handle other commands.
 command=$(get_command)
 case $command in
+
+    "update")
+        (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
+        exit_with_success_elapsed "Dependencies have been updated."
 
     "check")
         url_host=$(url_host $website_url)
