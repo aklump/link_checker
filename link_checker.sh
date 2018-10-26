@@ -41,54 +41,79 @@ command=$(get_command)
 case $command in
 
     "check")
-    url_host=$(url_host $website_url)
+        url_host=$(url_host $website_url)
 
-    # Create a directory for output of reports for this host.
-    dirname=${report_dir%/}/${url_host%/}
-    [ -d $dirname ] || mkdir $dirname || exit_with_failure "Can't create reports directory $dirname"
-    basename=${report_basename}$(url_host $website_url)--$(date8601 -c)
+        # Create a directory for output of reports for this host.
+        dirname=${report_dir%/}/${url_host%/}
+        [ -d $dirname ] || mkdir $dirname || exit_with_failure "Can't create reports directory $dirname"
+        basename=${report_basename}$(url_host $website_url)--$(date8601 -c)
 
-    list_clear
-    echo_title "Crawling $url_host..."
-    echo_heading "Start time is $(echo_yellow $(time_local))"
-    echo
-    if ! has_option "display"; then
-        echo "Writing report to:"
-        list_add_item "${dirname}/${basename}.txt"
-    fi
-    echo_green_list
-
-    # Crawl the site using https://github.com/stevenvachon/broken-link-checker
-    declare -a options=('-rov' "--filter-level=${filter_level}");
-
-    # Add in our nofollow configuration, if there.
-    for pattern in "${nofollow[@]}"; do
-       options=("${options[@]}" "--exclude=${pattern}")
-    done
-    command="blc ${website_url} ${options[@]}"
-
-    if has_option "display"; then
-        (cd $ROOT/node_modules/broken-link-checker/bin && ${command})
-    else
-        (cd $ROOT/node_modules/broken-link-checker/bin && ${command} > "${dirname}/${basename}.txt")
-    fi
-
-    # Generate subreports if asked.
-    if [ ${#subreports[@]} -gt 0 ]; then
-        echo "Creating subreports in ${dirname}/"
         list_clear
-        for status in "${subreports[@]}"; do
-            if has_option "display"; then
-                grep "$status" ${dirname}/${basename}.txt
-            else
-                list_add_item "${basename}--${status}.txt"
-                grep "$status" ${dirname}/${basename}.txt > "${dirname}/${basename}--${status}.txt"
-            fi
-        done
+        echo_title "Crawling $url_host..."
+        echo_heading "Start time is $(echo_yellow $(time_local))"
+        echo
+        if ! has_option "display"; then
+            echo "Writing report to:"
+            list_add_item "${dirname}/${basename}.txt"
+        fi
         echo_green_list
-    fi
-    has_failed && exit_with_failure
-    exit_with_success_elapsed "Reports ready."
+
+        # Crawl the site using https://github.com/stevenvachon/broken-link-checker
+        declare -a options=('-ro' "--filter-level=${filter_level}");
+        if has_option "verbose"; then
+            options=("${options[@]}" "-v")
+        fi
+
+        # Add in our nofollow configuration, if there.
+        for pattern in "${nofollow[@]}"; do
+           options=("${options[@]}" "--exclude=${pattern}")
+        done
+        command="blc ${website_url} ${options[@]}"
+
+        if has_option "display"; then
+            (cd $ROOT/node_modules/broken-link-checker/bin && ${command})
+        else
+            (cd $ROOT/node_modules/broken-link-checker/bin && ${command} > "${dirname}/${basename}.txt")
+        fi
+
+        # Generate sub-reports if asked.
+        if [ ${#subreports[@]} -gt 0 ]; then
+            echo "Creating sub-reports in ${dirname}/"
+            list_clear
+            for status in "${subreports[@]}"; do
+                if has_option "display"; then
+                    grep "$status" ${dirname}/${basename}.txt
+                else
+                    list_add_item "${basename}--${status}.txt"
+                    grep "$status" ${dirname}/${basename}.txt > "${dirname}/${basename}--${status}.txt"
+                fi
+            done
+            echo_green_list
+        fi
+        has_failed && exit_with_failure
+        exit_with_success_elapsed "Reports ready."
+    ;;
+
+    "reports")
+        filepath=$(get_command_arg 0)
+        dirname=$(dirname $filepath)
+        basename=$(path_filename $filepath)
+
+        if [ ${#subreports[@]} -gt 0 ]; then
+            echo "Creating sub-reports in ${dirname}/"
+            list_clear
+            for status in "${subreports[@]}"; do
+                if has_option "display"; then
+                    grep "$status" ${dirname}/${basename}.txt
+                else
+                    list_add_item "${basename}--${status}.txt"
+                    grep "$status" ${dirname}/${basename}.txt > "${dirname}/${basename}--${status}.txt"
+                fi
+            done
+            echo_green_list
+        fi
+        has_failed && exit_with_failure
+        exit_with_success_elapsed "Reports ready."
     ;;
 
 esac

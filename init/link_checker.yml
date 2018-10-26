@@ -25,11 +25,10 @@ report_dir: ./reports
 # A prefix for all report files.
 report_basename: links-report--
 
-# Generate subreports by entering an array of search strings.  For example to
+# Generate sub-reports by entering an array of search strings.  For example to
 # to see all links that have a status of 404, create an entry of 'HTTP_404'.
 # Once you generate a report, you can review what types of strings are
-# available.  Another way to think of this is, subreports will return only the
+# available.  Another way to think of this is, sub-reports will return only the
 # lines that contain the strings entered below.
 subreports:
-  - HTTP_403
-  - HTTP_404
+  - HTTP_40

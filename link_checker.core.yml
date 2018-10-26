@@ -1,27 +1,47 @@
-title: 'Link Checker'
-config_path_base: ../../..
+---
 additional_config:
   - ../../../bin/config/link_checker.yml
-default_command: help
+author: "Aaron Klump <sourcecode@intheloftstudios.com>"
 commands:
   check:
-    help: 'Crawl your site and generate report(s) of your site''s links.'
-    aliases: [crawl]
-    options: { display: { help: 'Display to screen; do not write files.', type: boolean, aliases: [d] } }
-  init:
-    help: 'Initialize local configuration files.'
-  help:
-    help: 'Show this help screen.'
+    aliases:
+      - crawl
+    help: "Crawl your site and generate report(s) of your site's links."
+    options:
+      verbose:
+        aliases:
+          - v
+        help: "Display verbose info, e.g. cached and skipped items"
+        type: boolean
+      display:
+        aliases:
+          - d
+        help: "Display to screen; do not write files."
+        type: boolean
   clear-cache:
-    aliases: [clearcache, cc]
-    help: 'Clear all cached data.'
+    aliases:
+      - clearcache
+      - cc
+    help: "Clear all cached data."
+  help:
+    help: "Show this help screen."
+  init:
+    help: "Initialize local configuration files."
+  reports:
+    arguments:
+      filepath:
+        help: "The path to the master report file."
+        required: true
+    help: "Generate sub-reports from an existing file."
+config_path_base: ../../..
+default_command: help
+description: ""
+name: "Link Checker"
+title: "Link Checker"
 translate:
   ids:
-    - 'Completed successfully.'
+    - "Completed successfully."
     - Failed.
   strings:
-    en: null
-name: 'Link Checker'
-description: ''
-version: 1.0.7
-author: 'Aaron Klump <sourcecode@intheloftstudios.com>'
+    en: ~
+version: "1.0.7"
