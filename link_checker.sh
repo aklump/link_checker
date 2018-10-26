@@ -12,7 +12,9 @@ CONFIG="link_checker.core.yml";
 #LOGFILE="link_checker.core.log"
 
 function on_pre_config() {
-    if [[ "$(get_command)" == "init" ]]; then
+    if [[ "$(get_command)" == "update" ]]; then
+        (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
+    elif [[ "$(get_command)" == "init" ]]; then
         (cd $ROOT && yarn) || exit_with_failure "Missing yarn; cannot install node packages."
         exit_with_init
     fi
