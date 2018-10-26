@@ -8,7 +8,7 @@ commands:
     options: { verbose: { aliases: [v], help: 'Include verbose info, e.g. cached and skipped items', type: boolean }, display: { aliases: [d], help: 'Display to screen; do not write files.', type: boolean } }
   reports:
     arguments: { crawl_filepath: { help: 'The filename of a crawl file (in the configured reports directory) or an absolute path to any crawl file.  Reports will be created in the same directory as the crawl file.', required: true } }
-    options: {force: {aliases: [f], help: 'Overwrite existing files', type: boolean} }
+    options: { force: { aliases: [f], help: 'Overwrite existing files', type: boolean } }
     help: 'Generate reports from an existing file.'
   help:
     help: 'Show this help screen.'
@@ -30,4 +30,4 @@ translate:
     - Failed.
   strings:
     en: null
-version: 1.0.12
+version: 1.0.13
