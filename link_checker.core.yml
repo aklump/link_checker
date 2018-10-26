@@ -2,22 +2,23 @@ additional_config:
   - ../../../bin/config/link_checker.yml
 author: 'Aaron Klump <sourcecode@intheloftstudios.com>'
 commands:
-  check:
-    aliases: [crawl]
-    help: 'Crawl your site and generate report(s) of your site''s links.'
-    options: { verbose: { aliases: [v], help: 'Display verbose info, e.g. cached and skipped items', type: boolean }, display: { aliases: [d], help: 'Display to screen; do not write files.', type: boolean } }
+  crawl:
+    aliases: [check]
+    help: 'Crawl your site and generate a master report.'
+    options: { verbose: { aliases: [v], help: 'Include verbose info, e.g. cached and skipped items', type: boolean }, display: { aliases: [d], help: 'Display to screen; do not write files.', type: boolean } }
+  reports:
+    arguments: { crawl_filepath: { help: 'The filename of a crawl file (in the configured reports directory) or an absolute path to any crawl file.  Reports will be created in the same directory as the crawl file.', required: true } }
+    options: {force: {aliases: [f], help: 'Overwrite existing files', type: boolean} }
+    help: 'Generate reports from an existing file.'
+  help:
+    help: 'Show this help screen.'
   clear-cache:
     aliases: [clearcachebprd, cc]
     help: 'Clear all cached data.'
-  help:
-    help: 'Show this help screen.'
   init:
     help: 'Initialize local config and dependencieds.'
   update:
     help: 'Update local config and dependencies.'
-  reports:
-    arguments: { filepath: { help: 'The path to the master report file.', required: true } }
-    help: 'Generate sub-reports from an existing file.'
 config_path_base: ../../..
 default_command: help
 description: ''

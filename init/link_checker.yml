@@ -19,16 +19,23 @@ website_url: http://www.intheloftstudios.com
 filter_level: 2
 
 # Enter a directory to output reports; reports will be grouped by directory by
-# domain name.
-report_dir: ./reports
+# domain name.  This is relative to your project root (../bin).
+crawl_file_directory: ./reports
 
-# A prefix for all report files.
-report_basename: links-report--
+# A prefix for crawl files.
+crawl_file_prefix: links-report--
 
-# Generate sub-reports by entering an array of search strings.  For example to
-# to see all links that have a status of 404, create an entry of 'HTTP_404'.
-# Once you generate a report, you can review what types of strings are
-# available.  Another way to think of this is, sub-reports will return only the
-# lines that contain the strings entered below.
-subreports:
-  - HTTP_40
+# Once you've crawled the site and have a master file, you can generate
+# reports based on certain criteria.  For each entry in the array below,
+# you should create an array with the keys: suffix, and match.  The value of
+# suffix will be appended to the filename of the master file when the
+# report is saved.  Use `match` for a string that must be contained by a
+# line for it to appear in the report.  Another way to say it is,
+# reports will return only the lines that contain the strings entered below.
+reports:
+  - file_suffix: 40x
+    match: HTTP_40
+  - file_suffix: status-ok
+    match: "├───OK───"
+  - file_suffix: broken
+    match: "├─BROKEN─"

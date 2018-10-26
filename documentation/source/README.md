@@ -10,7 +10,8 @@ Crawl your website and detect broken links.  Generate various reports based on H
 
 - Install in your repository root using `cloudy pm-install aklump/link_checker`
 - Open _bin/config/link_checker.yml_ and set your config.
-- Crawl your site and create reports with `.bin/link_checker crawl`
+- Crawl your site with `.bin/link_checker crawl`
+- Create reports with `.bin/link_checker reports <crawl_filepath>`
 
 ## Requirements
 
@@ -45,6 +46,9 @@ The installation script above will generate the following structure where `.` is
 ## Usage
 
 * To see all commands use `./bin/link_checker help`
+
+> **Pro Tip:**
+> Use `tail -f <report filepath>` in another console window to follow along with the report as it's being generated.  You will see the `report filepath` when you initiate the crawl.
 
 ## Special Thanks
 
