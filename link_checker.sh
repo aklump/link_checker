@@ -86,16 +86,26 @@ case $command in
         ;;
 
     "reports")
-        filepath=$(path_resolve ${dirname} $(get_command_arg 0))
-        [ -f "$filepath" ] || exit_with_failure "Provided crawl file does not exist."
-        dirname=$(dirname $filepath)
-        crawl_file_basename=$(path_filename $filepath)
+        crawl_file_filepath="$(get_command_arg 0)"
+
+        # We allow users to drag from Finder onto Terminal, which gives us an
+        # absolute link, then we'll strip the basename and hope we're in the
+        # correct directory.
+        if path_is_absolute "$crawl_file_filepath"; then
+            crawl_file_filepath=$(basename $crawl_file_filepath)
+            echo
+            echo_yellow_highlight "Directory removed from absolute path; using: $crawl_file_filepath"
+            echo
+        fi
+        crawl_file_filepath=$(path_resolve "${dirname}" $crawl_file_filepath)
+        [ -f "$crawl_file_filepath" ] || exit_with_failure "$crawl_file_filepath does not exist."
+        output_dir=$(dirname $crawl_file_filepath)
 
         if [ ${#reports[@]} -gt 0 ]; then
 
             list_clear
             echo "Creating reports in:"
-            list_add_item "${dirname}/"
+            list_add_item "${output_dir}/"
             echo_list
             echo
 
@@ -103,12 +113,14 @@ case $command in
             for key in "${reports[@]}"; do
                eval $(get_config_as "match" "reports.${key}.match")
                eval $(get_config_as "suffix" "reports.${key}.file_suffix")
+
                if has_option "display"; then
-                   grep "$status" ${dirname}/${crawl_file_basename}.txt
+                   grep "${match}" ${crawl_file_filepath}
                else
-                   report_basename="${crawl_file_basename}--${suffix}.txt"
-                   if has_option "f"  || [ ! -f "${dirname}/${basename}" ] || confirm --danger "${report_basename} exists; overwrite?"; then
-                       grep "${match}" ${dirname}/${crawl_file_basename}.txt > "${dirname}/${report_basename}"
+                   report_basename="$(path_filename $crawl_file_filepath)--${suffix}.txt"
+                   report_filepath="${output_dir}/${report_basename}"
+                   if has_option "f"  || [ ! -f "$report_filepath" ] || confirm --danger "${report_basename} exists; overwrite?"; then
+                       grep "${match}" ${crawl_file_filepath} > "${report_filepath}"
                        list_add_item "$(echo_green ${report_basename})"
                    else
                        list_add_item "$(echo "${report_basename} [skipped]")"
@@ -117,6 +129,8 @@ case $command in
             done
             echo "Report list:"
             echo_list
+        else
+          fail_because "There are no reports defined in the configuration."
         fi
         has_failed && exit_with_failure
         exit_with_success_elapsed "Reports ready."
