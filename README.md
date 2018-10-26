@@ -6,18 +6,15 @@
 
 Check your website for broken links.
 
-
-**Visit <https://aklump.github.io/link_checker> for full documentation.**
-
 ## Quick Start
 
 - Install in your repository root using `cloudy pm-install aklump/link_checker`
-- Open _bin/config/link_checker.yml_ and modify as needed.
+- Open _bin/config/link_checker.yml_ and set your config.
+- Crawl your site and create reports with `.bin/link_checker crawl`
 
 ## Requirements
 
-You must have [Cloudy](https://github.com/aklump/cloudy) installed on your system to install this package.
-You must have [yarn](https://yarnpkg.com/en/) installed for other dependencies, as well.
+You must have [Cloudy](https://github.com/aklump/cloudy) and [yarn](https://yarnpkg.com/en/) installed on your system to install this package.
 
 ## Installation
 
@@ -43,8 +40,7 @@ The installation script above will generate the following structure where `.` is
 
 | Filename | Description | VCS |
 |----------|----------|---|
-| _link_checker.yml_ | Configuration shared across all server environments: prod, staging, dev  | yes |
-
+| _link_checker.yml_ | Configuration file  | yes |
 
 ## Usage
 
