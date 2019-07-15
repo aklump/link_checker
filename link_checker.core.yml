@@ -1,5 +1,5 @@
 additional_config:
-  - ../../../bin/config/link_checker.yml
+  - bin/config/link_checker.yml
 author: 'Aaron Klump <sourcecode@intheloftstudios.com>'
 commands:
   crawl:
